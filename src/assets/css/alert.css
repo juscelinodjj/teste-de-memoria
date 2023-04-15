@@ -1,0 +1,17 @@
+.alert {
+  padding: 10px 0;
+  position: absolute;
+  text-align: center;
+  transition: 1s;
+  width: 100%;
+}
+
+.alert-container {
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.alert-container .seconds {
+  color: #ecf0f1;
+  font-weight: bold;
+}

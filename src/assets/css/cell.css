@@ -1,0 +1,24 @@
+.cell {
+  align-items: center;
+  border-radius: 4px;
+  color: #000;
+  display: flex;
+  font-size: 4rem;
+  font-weight: 700;
+  height: 75px;
+  justify-content: center;
+  width: 90px;
+}
+
+.cell.enabled {
+  color: #fff;
+  cursor: pointer;
+}
+
+.cell.enabled::after {
+  content: attr(data-value);
+}
+
+.cell.cover {
+  background-color: #ffffff;
+}

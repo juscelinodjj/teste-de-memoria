@@ -1,0 +1,18 @@
+.btn-start {
+  align-self: end;
+  background-color: #000;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 90px;
+  margin-bottom: 30px;
+  width: 90px;
+}
+
+@media (max-width: 1024px) {
+  .btn-start {
+    left: 50%;
+    position: fixed;
+    transform: translateX(-50%);
+  }
+}
