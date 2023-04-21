@@ -1,6 +1,20 @@
 'use strict';
 
-const maxPositions = 9;
+const maxPositionsInCurrentTest = {
+  _defaultValue: 2,
+  _value: 2,
+  getValue() {
+    return this._value;
+  },
+  increment() {
+    if (this._value === getMaxCellsInCurrentScreen()) return;
+    this._value++;
+  },
+  decrement() {
+    if (this._value === this._defaultValue) return;
+    this._value--;
+  }
+};
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -8,7 +22,7 @@ function randomNumber(min, max) {
 
 function getPositions() {
   const positions = [];
-  while(positions.length < maxPositions) {
+  while(positions.length < maxPositionsInCurrentTest.getValue()) {
     const min = 1;
     const max = getMaxCellsInCurrentScreen();
     const position = randomNumber(min, max);

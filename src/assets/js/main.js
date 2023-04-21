@@ -1,6 +1,6 @@
 'use strict';
 
-let currentNumber = 1;
+let matchesInCurrentTest = 1;
 
 function start() {
   initCell(controller);
@@ -8,7 +8,7 @@ function start() {
 }
 
 function reset() {
-  currentNumber = 1;
+  matchesInCurrentTest = 1;
   resetTime();
   resetAllCell();
   toggleBtnStartVisibility();
@@ -23,17 +23,21 @@ function stop(win) {
 }
 
 function controller(cellId, cellNumber) {
-  const match = cellNumber === currentNumber;
+  const match = cellNumber === matchesInCurrentTest;
   if (!match) {
+    maxPositionsInCurrentTest.decrement();
     return stop(false);
   }
   resetCell(cellId);
-  currentNumber++;
-  if (currentNumber === 2) {
+  matchesInCurrentTest++;
+  if (matchesInCurrentTest === 2) {
     coverAllCell();
   }
-  if (currentNumber === 10) {
-    setTimeout(() => stop(true), 100);
+  if (matchesInCurrentTest === maxPositionsInCurrentTest.getValue() + 1) {
+    setTimeout(() => {
+      maxPositionsInCurrentTest.increment()
+      stop(true);
+    }, 100);
   }
 }
 
