@@ -22,3 +22,16 @@
 .cell.cover {
   background-color: #ffffff;
 }
+
+[data-value="1"] {
+  animation: move 1s infinite  alternate;
+}
+
+@keyframes move {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
