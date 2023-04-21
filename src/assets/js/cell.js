@@ -1,5 +1,14 @@
 'use strict';
 
+function getMaxCellsInCurrentScreen() {
+  const cells = document.querySelectorAll('.cell');
+  let count = 0;
+  for (const cell of cells) {
+    if (isInViewport(cell)) count++;
+  }
+  return count;
+}
+
 function getAllCell() {
   const positions = getPositions();
   const allCell = positions.map(position => {
