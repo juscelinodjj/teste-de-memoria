@@ -15,7 +15,9 @@ function reset() {
 }
 
 function stop(win) {
-  if (!win) return reset();
+  if (!win) {
+    return setTimeout(() => reset(), 1500);
+  }
   setTimeEnd();
   const time = getTime();
   showAlert(time);
@@ -26,6 +28,11 @@ function controller(cellId, cellNumber) {
   const match = cellNumber === matchesInCurrentTest;
   if (!match) {
     maxPositionsInCurrentTest.decrement();
+    addClassToCell(cellId, 'fail');
+    const passId = findCellPass(matchesInCurrentTest);
+    if (passId) {
+      addClassToCell(passId, 'pass');
+    }
     return stop(false);
   }
   resetCell(cellId);

@@ -23,6 +23,14 @@
   background-color: #ffffff;
 }
 
+.cell.fail {
+  background-color: #ff0000;
+}
+
+.cell.pass {
+  background-color: #0000ff;
+}
+
 [data-value="1"] {
   animation: move 1s infinite  alternate;
 }

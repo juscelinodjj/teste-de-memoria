@@ -50,6 +50,8 @@ function resetCell(id) {
   cell.setAttribute('data-value', '');
   cell.classList.remove('enabled');
   cell.classList.remove('cover');
+  cell.classList.remove('fail');
+  cell.classList.remove('pass');
 }
 
 function resetAllCell() {
@@ -67,4 +69,22 @@ function coverAllCell() {
     if (!isTarget) continue;
     cell.classList.add('cover');
   }
+}
+
+function addClassToCell(id, _class) {
+  const cell = document.querySelector(`#${id}`);
+  cell.classList.add(_class);
+}
+
+function findCellPass(value) {
+  const cells = document.querySelectorAll('.cell');
+  for (const cell of cells) {
+    const currentValue = cell.getAttribute('data-value');
+    const match = Number(currentValue) === value;
+    if (match) {
+      const { id } = cell;
+      return id;
+    }
+  }
+  return false;
 }
