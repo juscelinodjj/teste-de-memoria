@@ -1,28 +1,31 @@
 'use strict';
 
-const maxCells = 70;
+app.panel = (function panel() {
 
-function getCellMarkup(id) {
-  return `<div id="cell-${id}" class="cell" data-value></div>`;
-}
+  const maxCells = 70;
 
-function getCellsMarkup(quantity, rawCellsMarkup = []) {
-  const repeat = rawCellsMarkup.length < quantity;
-  if (!repeat) {
-    const cellsMarkup = rawCellsMarkup.join('');
+  function getDivMarkup(id) {
+    return `<div id="cell-${id}" class="cell" data-value></div>`;
+  }
+
+  function getCellsMarkup(quantity) {
+    let cellsMarkup = '';
+    for (let index = 0; index < quantity; index++) {
+      const id = index + 1;
+      const divMarkup = getDivMarkup(id);
+      cellsMarkup += divMarkup;
+    }
     return cellsMarkup;
   }
-  const id = rawCellsMarkup.length + 1;
-  const cellMarkup = getCellMarkup(id);
-  rawCellsMarkup.push(cellMarkup);
-  return getCellsMarkup(quantity, rawCellsMarkup);
-}
 
-function addCellsToPanel() {
-  const quantity = maxCells;
-  const markup = getCellsMarkup(quantity);
-  const panelContainer = document.querySelector('.panel-container');
-  panelContainer.innerHTML = markup;
-}
+  function addCellsToPanel() {
+    const markup = getCellsMarkup(maxCells);
+    const panelContainer = document.querySelector('.panel-container');
+    panelContainer.innerHTML = markup;
+  }
 
-addCellsToPanel();
+  addCellsToPanel();
+
+  return null;
+
+})();

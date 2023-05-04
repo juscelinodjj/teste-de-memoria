@@ -1,35 +1,46 @@
 'use strict';
 
-const maxPositionsInCurrentTest = {
-  _defaultValue: 2,
-  _value: 2,
-  getValue() {
-    return this._value;
-  },
-  increment() {
-    if (this._value === getMaxCellsInCurrentScreen()) return;
-    this._value++;
-  },
-  decrement() {
-    if (this._value === this._defaultValue) return;
-    this._value--;
-  }
-};
+app.positions = (function positions() {
 
-function randomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+  const defaultValue = 2;
+  let value = 2;
 
-function getPositions() {
-  const positions = [];
-  while(positions.length < maxPositionsInCurrentTest.getValue()) {
-    const min = 1;
-    const max = getMaxCellsInCurrentScreen();
-    const position = randomNumber(min, max);
-    const isRepeated = positions.includes(position);
-    if (isRepeated) continue;
-    positions.push(position);
+  function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
-  console.log( [...positions].sort((a, b) => a - b) ); // TEMP
-  return positions;
-}
+
+  function current() {
+    return value;
+  }
+
+  function increment() {
+    if (value === app.cell.getMaxCellsInCurrentScreen()) return;
+    value++;
+  }
+
+  function decrement() {
+    if (value === defaultValue) return;
+    value--;
+  }
+
+  function gen() {
+    const positions = [];
+    while(positions.length < current()) {
+      const min = 1;
+      const max = app.cell.getMaxCellsInCurrentScreen();
+      const position = randomNumber(min, max);
+      const isRepeated = positions.includes(position);
+      if (isRepeated) continue;
+      positions.push(position);
+    }
+    return positions;
+  }
+
+  return {
+    gen,
+    current,
+    increment,
+    decrement
+  };
+
+})();

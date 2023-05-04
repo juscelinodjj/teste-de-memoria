@@ -1,25 +1,35 @@
 'use strict';
 
-let timeStart = 0;
-let timeEnd = 0;
+app.time = (function time() {
 
-function setTimeStart() {
-  timeStart = performance.now();
-}
+  let start = 0;
+  let end = 0;
 
-function setTimeEnd() {
-  timeEnd = performance.now();
-}
+  function setStart() {
+    start = performance.now();
+  }
 
-function resetTime() {
-  timeStart = 0;
-  timeEnd = 0;
-}
+  function setEnd() {
+    end = performance.now();
+  }
 
-function getTime() {
-  const timeDiff = timeEnd - timeStart;
-  const timeDiffInSeconds = (timeDiff / 1000).toFixed(1);
-  resetTime();
-  const [secondsWithoutDecimal, decimal] = timeDiffInSeconds.split('.');
-  return Number(decimal) === 0 ? secondsWithoutDecimal : timeDiffInSeconds;
-}
+  function reset() {
+    start = 0;
+    end = 0;
+  }
+
+  function get() {
+    const diff = end - start;
+    const diffInSeconds = (diff / 1000).toFixed(1);
+    const [secondsWithoutDecimal, decimal] = diffInSeconds.split('.');
+    return Number(decimal) === 0 ? secondsWithoutDecimal : diffInSeconds;
+  }
+
+  return {
+    setStart,
+    setEnd,
+    reset,
+    get
+  }
+
+})();

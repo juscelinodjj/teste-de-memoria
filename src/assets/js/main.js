@@ -1,55 +1,59 @@
 'use strict';
 
-let matchesInCurrentTest = 1;
+app.main = (function main() {
 
-function start() {
-  initCell(controller);
-  setTimeStart();
-}
+  let matchesInCurrentTest = 1;
 
-function reset() {
-  matchesInCurrentTest = 1;
-  resetTime();
-  resetAllCell();
-  toggleBtnStartVisibility();
-}
-
-function stop(win) {
-  if (!win) {
-    return setTimeout(() => reset(), 1500);
+  function start() {
+    app.cell.init(controller);
+    app.time.setStart();
   }
-  setTimeEnd();
-  const time = getTime();
-  showAlert(time);
-  setTimeout(() => reset(), 2200);
-}
 
-function controller(cellId, cellNumber) {
-  const match = cellNumber === matchesInCurrentTest;
-  if (!match) {
-    maxPositionsInCurrentTest.decrement();
-    addClassToCell(cellId, 'fail');
-    const passId = findCellPass(matchesInCurrentTest);
-    if (passId) {
-      addClassToCell(passId, 'pass');
+  function reset() {
+    matchesInCurrentTest = 1;
+    app.time.reset();
+    app.cell.resetAll();
+    app.btnStart.toggleVisibility();
+  }
+
+  function stop(win) {
+    if (!win) {
+      setTimeout(() => reset(), 1500);
+      return;
     }
-    return stop(false);
+    app.time.setEnd();
+    app.alert.show(app.time.get());
+    setTimeout(() => reset(), 2200);
   }
-  resetCell(cellId);
-  matchesInCurrentTest++;
-  if (matchesInCurrentTest === 2) {
-    coverAllCell();
+
+  function onFail(cellId) {
+    app.positions.decrement();
+    app.cell.status(cellId, false);
+    const rightCellId = app.cell.findRight(matchesInCurrentTest);
+    if (rightCellId) {
+      app.cell.status(rightCellId, true);
+    }
+    stop(false);
   }
-  if (matchesInCurrentTest === maxPositionsInCurrentTest.getValue() + 1) {
-    setTimeout(() => {
-      maxPositionsInCurrentTest.increment()
+
+  function onMatch(cellId) {
+    app.cell.reset(cellId);
+    matchesInCurrentTest++;
+    if (matchesInCurrentTest === 2) app.cell.coverAll();
+    const finish = matchesInCurrentTest === app.positions.current() + 1;
+    if (finish) {
+      app.positions.increment()
       stop(true);
-    }, 100);
+    }
   }
-}
 
-function init() {
-  setBtnStartClickEvent(start);
-}
+  function controller(cellId, cellNumber) {
+    const match = cellNumber === matchesInCurrentTest;
+    !match ? onFail(cellId) : onMatch(cellId);
+  }
 
-init();
+  app.btnStart.setOnClick(start);
+
+  return null;
+
+})();

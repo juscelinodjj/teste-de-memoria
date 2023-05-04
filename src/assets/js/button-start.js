@@ -1,18 +1,25 @@
 'use strict';
 
-function getBtnStart() {
-  const btnStart = document.querySelector('.btn-start');
-  return btnStart;
-}
+app.btnStart = (function btnStart() {
 
-function toggleBtnStartVisibility() {
-  const btnStart = getBtnStart();
-  btnStart.classList.toggle('hide');
-}
+  function getBtnStart() {
+    const btnStart = document.querySelector('.btn-start');
+    return btnStart;
+  }
 
-function setBtnStartClickEvent(fn) {
-  const btnStart = getBtnStart();
-  btnStart.addEventListener('click', fn);
-}
+  function toggleVisibility() {
+    getBtnStart().classList.toggle('hide');
+  }
 
-setBtnStartClickEvent(toggleBtnStartVisibility);
+  function setOnClick(fn) {
+    getBtnStart().addEventListener('click', fn);
+  }
+
+  setOnClick(toggleVisibility);
+
+  return {
+    toggleVisibility,
+    setOnClick
+  }
+
+})();

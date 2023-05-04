@@ -24,11 +24,11 @@
 }
 
 .cell.fail {
-  background-color: #ff0000;
+  background-color: #e74c3c;
 }
 
 .cell.pass {
-  background-color: #0000ff;
+  background-color: #3498db;
 }
 
 [data-value="1"] {
