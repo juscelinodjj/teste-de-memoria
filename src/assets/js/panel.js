@@ -24,8 +24,15 @@ app.panel = (function panel() {
     panelContainer.innerHTML = markup;
   }
 
+  function lock(condition) {
+    const panel = document.querySelector('.panel');
+    condition ? panel.classList.add('lock') : panel.classList.remove('lock');
+  }
+
   addCellsToPanel();
 
-  return null;
+  return {
+    lock
+  };
 
 })();

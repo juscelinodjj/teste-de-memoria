@@ -12,6 +12,7 @@ app.main = (function main() {
   function reset() {
     matchesInCurrentTest = 1;
     app.time.reset();
+    app.panel.lock(false);
     app.cell.resetAll();
     app.btnStart.toggleVisibility();
   }
@@ -40,6 +41,7 @@ app.main = (function main() {
     app.cell.reset(cellId);
     matchesInCurrentTest++;
     if (matchesInCurrentTest === 2) app.cell.coverAll();
+    app.panel.lock(false);
     const finish = matchesInCurrentTest === app.positions.current() + 1;
     if (finish) {
       app.positions.increment()
@@ -48,6 +50,7 @@ app.main = (function main() {
   }
 
   function controller(cellId, cellNumber) {
+    app.panel.lock(true);
     const match = cellNumber === matchesInCurrentTest;
     !match ? onFail(cellId) : onMatch(cellId);
   }

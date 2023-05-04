@@ -6,6 +6,10 @@
   width: 1010px;
 }
 
+.panel.lock {
+  pointer-events:none;
+}
+
 .panel-container {
   display: flex;
   flex-wrap: wrap;
