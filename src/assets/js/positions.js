@@ -3,24 +3,29 @@
 app.positions = (function positions() {
 
   const defaultValue = 2;
-  let value = 2;
+  const keyLocalStorage = 'progress';
 
   function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
   function current() {
-    return value;
+    const currentValue = localStorage.getItem(keyLocalStorage);
+    return currentValue ? Number(currentValue) : defaultValue;
   }
 
   function increment() {
-    if (value === app.cell.getMaxCellsInCurrentScreen()) return;
-    value++;
+    const currentValue = current();
+    if (currentValue === app.cell.getMaxCellsInCurrentScreen()) return;
+    const newValue = Number(currentValue) + 1;
+    localStorage.setItem(keyLocalStorage, newValue);
   }
 
   function decrement() {
-    if (value === defaultValue) return;
-    value--;
+    const currentValue = current();
+    if (currentValue === defaultValue) return;
+    const newValue = Number(currentValue) - 1;
+    localStorage.setItem(keyLocalStorage, newValue);
   }
 
   function gen() {
